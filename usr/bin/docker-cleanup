@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+
+# Crontab entry:
+#
+# ##
+# # Cleanup unused docker images
+# ##
+# @weekly /usr/bin/docker-cleanup
+
+docker volume rm $(docker volume ls -f dangling=true -q)
+docker rmi $(docker images --quiet --filter "dangling=true")
+
+docker system prune -a --volumes -f

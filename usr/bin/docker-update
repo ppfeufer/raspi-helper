@@ -1,0 +1,41 @@
+#!/usr/bin/env bash
+
+default_user='pi'
+docker_directory=${1:-"/home/${default_user}/docker/"}
+target_directory="${docker_directory%/}/"
+
+for path in ${target_directory}*/
+    do
+        [ -d "${path}" ] || continue # if not a directory, skip
+
+        dirname="$(basename "${path}")"
+
+        printf "Attempting to update docker containers in \"${path}\" …\n"
+
+        cd ${path}
+
+        # Check for docker-compose.yaml or docker-compose.yml file
+        if [[ -f "docker-compose.yaml" || -f "docker-compose.yml" ]]
+            then
+                printf "Docker compose file found, updating docker containers …\n"
+
+                if [[ $(git rev-parse --show-toplevel 2>/dev/null) = "${PWD}" ]]
+                    then
+                        printf "Git repository detected, updating …\n"
+
+                        git pull
+                fi
+
+                # Update docker containers
+                docker-compose pull
+
+                # Restart docker containers
+                docker-compose down
+                docker-compose up -d
+
+                printf "\n\n"
+            else
+                printf "Neither 'docker-compose.yaml' nor 'docker-compose.yml' found, nothing to do here …\n"
+        fi
+    done
+
