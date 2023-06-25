@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
-default_user='pi'
-docker_directory=${1:-"/home/${default_user}/docker/"}
+current_user_home=${HOME} # sudo returns /root here, which is intended
+docker_directory=${1:-"${current_user_home}/docker/"}
 target_directory="${docker_directory%/}/"
 
 for path in ${target_directory}*/
