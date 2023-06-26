@@ -1,0 +1,27 @@
+#!/usr/bin/env bash
+
+current_user_home=${HOME} # sudo returns /root here, which is intended
+git_repos_directory=${1:-"${current_user_home}/git-repos/"}
+target_directory="${git_repos_directory%/}/"
+
+for path in ${target_directory}*/
+    do
+        [ -d "${path}" ] || continue # if not a directory, skip
+
+        dirname="$(basename "${path}")"
+
+        printf "Attempting to update git repository in \"${path}\" …\n"
+
+        cd ${path}
+
+        if [[ $(git rev-parse --show-toplevel 2>/dev/null) = "${PWD}" ]]
+            then
+                printf "Git repository \"${dirname}\" detected, updating …\n"
+
+                git pull
+            else
+                printf "\"${dirname}\" doesn't seem to be a git repository!"
+        fi
+
+        printf "\n\n"
+    done
