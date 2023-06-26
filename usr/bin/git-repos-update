@@ -14,7 +14,7 @@ for path in ${target_directory}*/
 
         cd ${path}
 
-        if [[ $(git rev-parse --show-toplevel 2>/dev/null) = "${PWD}" ]]
+        if [[ $(git rev-parse --show-toplevel 2>/dev/null) == "$(cd -P "${path}" && pwd)" ]]
             then
                 printf "Git repository \"${dirname}\" detected, updating …\n"
 
