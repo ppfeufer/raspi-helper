@@ -21,7 +21,7 @@ for path in ${target_directory}*/
 
                 if [[ $(git rev-parse --show-toplevel 2>/dev/null) = "${PWD}" ]]
                     then
-                        printf "Git repository detected, updating …\n"
+                        printf "Git repository \"${dirname}\" detected, updating …\n"
 
                         git pull
                 fi
