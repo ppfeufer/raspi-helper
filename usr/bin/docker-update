@@ -4,38 +4,64 @@ current_user_home=${HOME} # sudo returns /root here, which is intended
 docker_directory=${1:-"${current_user_home}/docker/"}
 target_directory="${docker_directory%/}/"
 
-for path in ${target_directory}*/
-    do
-        [ -d "${path}" ] || continue # if not a directory, skip
 
-        dirname="$(basename "${path}")"
+update_docker_container () {
+    cd ${1}
 
-        printf "Attempting to update docker containers in \"${path}\" …\n"
+    printf "\n"
 
-        cd ${path}
+    # Check for docker-compose.yaml or docker-compose.yml file
+    if [[ -f "docker-compose.yaml" || -f "docker-compose.yml" ]]
+        then
+            printf "Attempting to update docker containers in \"${1}\" …\n"
+            printf "Docker compose file found, updating docker containers …\n"
 
-        # Check for docker-compose.yaml or docker-compose.yml file
-        if [[ -f "docker-compose.yaml" || -f "docker-compose.yml" ]]
+            if [[ $(git rev-parse --show-toplevel 2>/dev/null) = "${PWD}" ]]
+                then
+                    printf "Git repository \"${dirname}\" detected, updating …\n"
+
+                    git pull
+            fi
+
+            # Update docker containers
+            docker-compose pull
+
+            # Restart docker containers
+            docker-compose down
+            docker-compose up -d
+
+
+        else
+            printf "Neither 'docker-compose.yaml' nor 'docker-compose.yml' found, nothing to do here …\n"
+    fi
+}
+
+
+# Check if we have docker compose file in the given docker directory,
+# otherwise walk through its sub-directories
+cd ${docker_directory}
+
+printf "Checking for a docker compose file in \"${docker_directory}\" …\n"
+
+if [[ -f "docker-compose.yaml" || -f "docker-compose.yml" ]]
+    then
+        update_docker_container ${docker_directory}
+    else
+        subdircount=$(find ${target_directory} -maxdepth 1 -type d | wc -l)
+
+        if [[ "${subdircount}" -eq 1 ]]
             then
-                printf "Docker compose file found, updating docker containers …\n"
-
-                if [[ $(git rev-parse --show-toplevel 2>/dev/null) = "${PWD}" ]]
-                    then
-                        printf "Git repository \"${dirname}\" detected, updating …\n"
-
-                        git pull
-                fi
-
-                # Update docker containers
-                docker-compose pull
-
-                # Restart docker containers
-                docker-compose down
-                docker-compose up -d
-
-                printf "\n\n"
-            else
                 printf "Neither 'docker-compose.yaml' nor 'docker-compose.yml' found, nothing to do here …\n"
-        fi
-    done
+            else
+                printf "No docker compose file found, walking through possible subdirectories …\n"
 
+                for path in ${target_directory}*/
+                    do
+                        [ -d "${path}" ] || continue # if not a directory, skip
+
+                        dirname="$(basename "${path}")"
+
+                        update_docker_container ${path}
+                    done
+            fi
+    fi
