@@ -18,7 +18,15 @@ for path in ${target_directory}*/
             then
                 printf "Git repository \"${dirname}\" detected, updating …\n"
 
-                git pull
+                # We do a hard reset here instead of a simple pull, in case the
+                # RasPi does write to any of linked config files, which it's not
+                # supposed to do.
+                main_branch=$(git branch -vv | grep -Po "^[\s\*]*\K[^\s]*(?=.*$(git branch -rl '*/HEAD' | grep -o '[^ ]\+$'))")
+                main_branch_remote_tracking=$(git branch -r | grep -Po 'HEAD -> \K.*$')
+
+                git checkout ${main_branch}
+                git fetch --all
+                git reset --hard ${main_branch_remote_tracking}
             else
                 printf "\"${dirname}\" doesn't seem to be a git repository!"
         fi
