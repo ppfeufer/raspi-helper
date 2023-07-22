@@ -1,7 +1,50 @@
 #!/usr/bin/env bash
 
 current_user_home=${HOME} # sudo returns /root here, which is intended
-docker_directory=${1:-"${current_user_home}/docker/"}
+docker_directory="${current_user_home}/docker/"
+restart_container=True
+
+
+usage() {
+    printf "Usage:\n"
+    printf "\t$0 [OPTION]\n"
+
+    printf "\nExample:\n"
+    printf "\t$0 --directory=/home/myhome/docker/\tTo search for docker-compose files in the given directory.\n"
+
+    printf "\nOptions:\n"
+    printf "\t-d, --directory\t\tThe The directory the script is looking for docker-compose files. If not specified, \"${current_user_home}/docker/\" is assumed.\n"
+
+    printf "\t--no-restart\t\tDon't restart the docker container. This is useful when you reboot the system afterwards so containers that need longer to start won't be restarted twice in short succession.\n"
+    exit 1;
+}
+
+
+for i in "$@"
+    do
+        case $i in
+            -d=* | --directory=*)
+                docker_directory="${i#*=}"
+                shift
+                ;;
+
+            --no-restart)
+                restart_container=False
+                ;;
+
+            -* | --*)
+                echo "Unknown option $i"
+                usage
+                exit 1
+                ;;
+
+            *)
+                usage
+                ;;
+        esac
+    done
+
+
 target_directory="${docker_directory%/}/"
 
 
@@ -27,10 +70,11 @@ update_docker_container () {
             docker-compose pull
 
             # Restart docker containers
-            docker-compose down
-            docker-compose up -d
-
-
+            if [ ${restart_container} == True ]
+                then
+                    docker-compose down
+                    docker-compose up -d
+            fi
         else
             printf "Neither 'docker-compose.yaml' nor 'docker-compose.yml' found, nothing to do here …\n"
     fi
