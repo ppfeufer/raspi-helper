@@ -45,10 +45,10 @@ run_backup () {
     time sudo dd if=${DEVICE_TO_BACKUP} of=${BACKUP_DIR}${BACKUP_FILE_NAME} bs=1M status=progress
 
     # Check for PiShrink (https://github.com/Drewsif/PiShrink)
-    if command -v pishrink > /dev/null
+    if command -v /usr/local/bin/pishrink > /dev/null
         then
             # Shrinking the image
-            sudo pishrink -v ${BACKUP_DIR}${BACKUP_FILE_NAME}
+            sudo /usr/local/bin/pishrink -v ${BACKUP_DIR}${BACKUP_FILE_NAME}
     fi
 
     # Deleting backups older than 7 days
