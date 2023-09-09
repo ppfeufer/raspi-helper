@@ -1,11 +1,11 @@
 #!/usr/bin/env bash
 
-# Crontab entry:
+# Example crontab entry:
 #
 # ##
 # # Backup
 # ##
-# 0 4 * * Sat /usr/bin/raspi-backup
+# 0 4 * * Sat /usr/local/bin/raspi-backup
 
 isMounted () {
     findmnt "$1" > /dev/null;
@@ -21,8 +21,7 @@ run_backup () {
     DEVICE_TO_BACKUP="/dev/sda"
 
     BACKUP_DIR="/mnt/Backup/"
-    BACKUP_FILE_NAME="raspi-${HOSTNAME}-${DATE}-${TIMESTAMP}.img"
-
+    BACKUP_FILE_NAME="${HOSTNAME}-${DATE}-${TIMESTAMP}.img"
 
     # Mount the backup directory if necessary
     if ! isMounted "${BACKUP_DIR}";
@@ -39,7 +38,6 @@ run_backup () {
             exit 1;
     fi
 
-
     # Now go forth and run the backup
     echo "Backing up ${DEVICE_TO_BACKUP} to ${BACKUP_DIR} as ${BACKUP_FILE_NAME} ..."
     time sudo dd if=${DEVICE_TO_BACKUP} of=${BACKUP_DIR}${BACKUP_FILE_NAME} bs=1M status=progress
@@ -52,9 +50,9 @@ run_backup () {
     fi
 
     # Deleting backups older than 7 days
-    if [ "$(find ${BACKUP_DIR} -type f -mtime +6 -name 'raspi-*.img')" ];
+    if [ "$(find ${BACKUP_DIR} -type f -mtime +6 -name \"${HOSTNAME}-*.img\")" ];
         then
-            find ${BACKUP_DIR} -type f -mtime +6 -name 'raspi-*.img' | xargs rm
+            find ${BACKUP_DIR} -type f -mtime +6 -name "${HOSTNAME}-*.img" | xargs rm
     fi
 }
 
