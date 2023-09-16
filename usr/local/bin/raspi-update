@@ -1,0 +1,79 @@
+#/usr/bin/env bash
+
+
+restart_raspi=True
+
+
+usage() {
+    printf "Usage:\n"
+    printf "\t$0 [OPTION]\n"
+
+    printf "\nExample:\n"
+    printf "\t$0 --no-reboot\n"
+
+    printf "\nOptions:\n"
+    printf "\t--no-reboot\t\tDon't reboot the Raspberry Pi when the update is finished.\n"
+    exit 1;
+}
+
+
+__confirm_action() {
+    read -r -p "${1:-Continue? [y/N]} " response
+
+    case "$response" in
+        [yY][eE][sS]|[yY])
+            true
+            ;;
+
+        *)
+            false
+            ;;
+    esac
+}
+
+
+for i in "$@"
+    do
+        case $i in
+            --no-reboot)
+                restart_raspi=False
+                ;;
+
+            -* | --*)
+                echo "Unknown option $i"
+                usage
+                exit 1
+                ;;
+        esac
+    done
+
+
+# Updating all git repos
+/usr/local/bin/git-repos-update
+
+# System update
+sudo apt update
+sudo apt upgrade -y
+
+if [ ${restart_raspi} == True ]
+    then
+        # Update the docker images, don't restart them
+        /usr/local/bin/docker-update --no-restart
+
+        printf "Ready to reboot?\n\n"
+
+        if __confirm_action
+            then
+                printf "\nRebooting …\n"
+
+                sudo reboot
+            else
+                printf "Exiting!\n"
+                exit 1
+        fi
+    else
+        # Update the docker images
+        /usr/local/bin/docker-update
+
+        printf "Not Rebooting automatically. Please reboot manually if needed.\n"
+fi
