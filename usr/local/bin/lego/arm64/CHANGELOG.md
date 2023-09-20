@@ -1,5 +1,17 @@
 # Changelog
 
+
+## [v4.14.1] - 2023-09-20
+
+### Fixed:
+- **[dnsprovider]** bunny: fix zone detection
+- **[dnsprovider]** bunny: use NRDCG fork
+- **[dnsprovider]** ovh: update client to v1.4.2
+
+## [v4.14.1] - 2023-09-19
+
+Cancelled due to CI failure.
+
 ## [v4.14.0] - 2023-08-20
 
 ### Added:
