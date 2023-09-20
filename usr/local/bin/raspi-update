@@ -54,6 +54,7 @@ for i in "$@"
 # System update
 sudo apt update
 sudo apt upgrade -y
+sudo apt autoremove -y
 
 if [ ${restart_raspi} == True ]
     then
