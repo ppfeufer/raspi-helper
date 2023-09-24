@@ -4,8 +4,8 @@
 #   - all stopped containers
 #   - all networks not used by at least one container
 #   - all volumes not used by at least one container
-#   - all images without at least one container associated to them
-#   - all build cache
+#   - all dangling images
+#   - all dangling build cache
 #
 # Crontab entry:
 #
@@ -14,4 +14,5 @@
 # ##
 # @weekly /usr/bin/docker-cleanup
 
-docker system prune -a --volumes -f
+#docker system prune -a --volumes -f
+docker system prune --volumes -f
