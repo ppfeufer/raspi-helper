@@ -12,7 +12,7 @@
 # ##
 # # Cleanup unused docker images
 # ##
-# @weekly /usr/bin/docker-cleanup
+# @weekly /usr/local/bin/docker-cleanup
 
 #docker system prune -a --volumes -f
 docker system prune --volumes -f
