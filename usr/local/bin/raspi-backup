@@ -50,7 +50,7 @@ run_backup () {
     fi
 
     # Deleting backups older than 7 days
-    if [ "$(find ${BACKUP_DIR} -type f -mtime +6 -name \"${HOSTNAME}-*.img\")" ];
+    if [[ $(find ${BACKUP_DIR} -type f -mtime +6 -name "*\\${HOSTNAME}-*.img") ]];
         then
             find ${BACKUP_DIR} -type f -mtime +6 -name "${HOSTNAME}-*.img" | xargs rm
     fi
