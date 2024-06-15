@@ -4,6 +4,16 @@ current_user_home=${HOME} # sudo returns /root here, which is intended
 docker_directory="${current_user_home}/docker/"
 restart_container=True
 
+# Let's see what our compose command will be …
+if command -v docker-compose > /dev/null
+    then
+        printf 'Legacy `docker-compose` detected …\n'
+        printf 'Please updated your docker to the latest version!\n\n'
+
+        compose_command="docker-compose"
+    else
+        compose_command="docker compose"
+fi
 
 usage() {
     printf "Usage:\n"
@@ -67,13 +77,13 @@ update_docker_container () {
             fi
 
             # Update docker containers
-            docker-compose pull
+            $(${compose_command} pull)
 
             # Restart docker containers
             if [ ${restart_container} == True ]
                 then
-                    docker-compose down
-                    docker-compose up -d
+                    $(${compose_command} down)
+                    $(${compose_command} up -d)
             fi
         else
             printf "Neither 'docker-compose.yaml' nor 'docker-compose.yml' found, nothing to do here …\n"
@@ -107,5 +117,5 @@ if [[ -f "docker-compose.yaml" || -f "docker-compose.yml" ]]
 
                         update_docker_container ${path}
                     done
-            fi
-    fi
+        fi
+fi
