@@ -17,6 +17,7 @@ run_backup () {
     DATE=`/bin/date '+%Y-%m-%d'`
     TIMESTAMP="$(date +%s)"
     HOSTNAME="$(hostname)"
+    RETENTION_TIME="21" # How long in days a backup should be kept
 
     DEVICE_TO_BACKUP="/dev/sda"
 
@@ -49,10 +50,10 @@ run_backup () {
             sudo /usr/local/bin/pishrink -v ${BACKUP_DIR}${BACKUP_FILE_NAME}
     fi
 
-    # Deleting backups older than 7 days
-    if [[ $(find ${BACKUP_DIR} -type f -mtime +6 -name "*\\${HOSTNAME}-*.img") ]];
+    # Deleting backups older than 21 days
+    if [[ $(find ${BACKUP_DIR} -type f -mtime +$(RETENTION_TIME) -name "*\\${HOSTNAME}-*.img") ]];
         then
-            find ${BACKUP_DIR} -type f -mtime +6 -name "${HOSTNAME}-*.img" | xargs rm
+            find ${BACKUP_DIR} -type f -mtime +$(RETENTION_TIME) -name "${HOSTNAME}-*.img" | xargs rm
     fi
 }
 
