@@ -1,9 +1,61 @@
 # Changelog
 
+## [v4.19.1] - 2024-10-06
+
+### Fixed
+
+- **[dnsprovider]** selectelv2: use baseURL from configuration
+- **[dnsprovider]** epik: add User-Agent
+
+## [v4.19.0] - 2024-10-03
+
+### Added
+
+- **[dnsprovider]** Add DNS provider for HuaweiCloud
+- **[dnsprovider]** Add DNS provider for SelfHost.(de|eu)
+- **[lib,cli,dnsprovider]** Add `dns.propagation-rns` option
+- **[cli,dnsprovider]** Add `dns.propagation-wait` flag
+- **[lib,dnsprovider]** Add `PropagationWait` function
+
+### Changed
+
+- **[dnsprovider]** ionos: follow CNAME
+- **[lib,dnsprovider]** Reducing the lock strength of the soa cache entry
+- **[lib,cli,dnsprovider]** Deprecation of `dns.disable-cp`, replaced by `dns.propagation-disable-ans`.
+
+### Fixed
+
+- **[dnsprovider]** Use UTC instead of GMT when possible
+- **[dnsprovider]** namesilo: restrict CleanUp
+- **[dnsprovider]** godaddy: fix cleanup
+
+## [v4.18.0] - 2024-08-30
+
+### Added
+
+- **[dnsprovider]** Add DNS provider for mijn.host
+- **[dnsprovider]** Add DNS provider for Lima-City
+- **[dnsprovider]** Add DNS provider for DirectAdmin
+- **[dnsprovider]** Add DNS provider for Mittwald
+- **[lib,cli]** feat: add option to handle the overall request limit
+- **[lib]** feat: expose certificates pool creation
+
+### Changed
+
+- **[cli]** feat: add LEGO_ISSUER_CERT_PATH to run hook
+- **[dnsprovider]** bluecat: skip deploy
+- **[dnsprovider]** ovh: allow to use ovh.conf file
+- **[dnsprovider]** designate: allow manually overwriting DNS zone
+
+### Fixed
+
+- **[ari]** fix: avoid Int63n panic in ShouldRenewAt()
+
 ## [v4.17.4] - 2024-06-12
 
 ### Fixed
-- update dependencies
+
+- **[dnsprovider]** Update dependencies
 
 ## [v4.17.3] - 2024-05-28
 
