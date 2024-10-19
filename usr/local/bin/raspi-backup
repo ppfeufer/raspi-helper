@@ -51,9 +51,9 @@ run_backup () {
     fi
 
     # Deleting backups older than 21 days
-    if [[ $(find ${BACKUP_DIR} -type f -mtime +$(RETENTION_TIME) -name "*\\${HOSTNAME}-*.img") ]];
+    if [[ $(find ${BACKUP_DIR} -type f -mtime +${RETENTION_TIME} -name "*\\${HOSTNAME}-*.img") ]];
         then
-            find ${BACKUP_DIR} -type f -mtime +$(RETENTION_TIME) -name "${HOSTNAME}-*.img" | xargs rm
+            find ${BACKUP_DIR} -type f -mtime +${RETENTION_TIME} -name "${HOSTNAME}-*.img" | xargs rm
     fi
 }
 
