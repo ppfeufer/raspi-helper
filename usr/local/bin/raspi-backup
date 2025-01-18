@@ -17,7 +17,7 @@ run_backup () {
     DATE=`/bin/date '+%Y-%m-%d'`
     TIMESTAMP="$(date +%s)"
     HOSTNAME="$(hostname)"
-    RETENTION_TIME="21" # How long in days a backup should be kept
+    RETENTION_TIME="28" # How long in days a backup should be kept
 
     DEVICE_TO_BACKUP="/dev/sda"
 
