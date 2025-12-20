@@ -1,10 +1,74 @@
 # Changelog
 
-lego is an independent, free, and open-source project, if you value it, consider [supporting it](https://donate.ldez.dev)! ❤️
+lego is an independent, free, open-source project, if you value it, consider [supporting it](https://donate.ldez.dev)! ❤️
 
 Everybody thinks that the others will donate, but in the end, nobody does.
 
 So if you think that lego is worth it, please consider [donating](https://donate.ldez.dev).
+
+## v4.30.1
+
+- Release date: 2025-12-16
+- Tag: [v4.30.1](https://github.com/go-acme/lego/releases/tag/v4.30.1)
+
+Due to an error related to `aliyun/credentials-go`, some artifacts of the v4.30.0 release have not been published.
+
+This release contains the same things as v4.30.0.
+
+## v4.30.0
+
+- Release date: 2025-12-16
+- Tag: [v4.30.0](https://github.com/go-acme/lego/releases/tag/v4.30.0)
+
+### Added
+
+- **[dnsprovider]** Add DNS provider for Ionos Cloud
+- **[dnsprovider]** Add DNS provider for Virtualname
+- **[dnsprovider]** Add DNS Provider for Neodigit
+- **[dnsprovider]** Add DNS provider for Syse.no
+- **[dnsprovider]** Add DNS provider for Gravity
+- **[dnsprovider]** Add DNS provider for hosting.nl
+
+### Changed
+
+- **[cli]** feat: remove email requirement
+
+### Fixed
+
+- **[dnsprovider]** autodns: use the right response structure
+
+## v4.29.0
+
+- Release date: 2025-11-29
+- Tag: [v4.29.0](https://github.com/go-acme/lego/releases/tag/v4.29.0)
+
+### Added
+ 
+- **[dnsprovider]** Add DNS provider for United-Domains
+- **[dnsprovider]** Add DNS provider for Gigahost.no
+- **[dnsprovider]** Add DNS provider for EdgeCenter
+- **[dnsprovider]** Add DNS provider for AlibabaCloud ESA
+- **[dnsprovider]** edgeone: add zones mapping
+- **[dnsprovider]** namecheap: add experimental proxy support
+
+### Changed
+
+- **[dnsprovider]** gandiv5: update base API URL
+
+### Fixed
+
+- **[dnsprovider]** hetzner: use int64 for IDs
+- **[dnsprovider]** baiducloud: pagination and TTL
+- **[dnsprovider]** inwx: fix API breaking changes with record IDs
+
+## v4.28.1
+
+- Release date: 2025-11-06
+- Tag: [v4.28.1](https://github.com/go-acme/lego/releases/tag/v4.28.1)
+
+### Fixed
+
+- **[cli]** fix: skip nil response
 
 ## v4.28.0
 
