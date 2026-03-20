@@ -6,6 +6,80 @@ Everybody thinks that the others will donate, but in the end, nobody does.
 
 So if you think that lego is worth it, please consider [donating](https://donate.ldez.dev).
 
+## v4.33.0
+
+- Release date: 2026-03-19
+- Tag: [v4.33.0](https://github.com/go-acme/lego/releases/tag/v4.33.0)
+
+### Added
+
+- **[dnsprovider]** Add DNS provider for Excedo
+- **[dnsprovider]** Add DNS provider for EuroDNS
+- **[dnsprovider]** Add DNS provider for Czechia
+
+### Changed
+
+- **[lib]** feat: allow to Unwrap obtainError
+
+### Fixed
+
+- **[dnsprovider]** liara: add support for team ID
+- **[dnsprovider]** gigahostno: remove unused Zone fields
+
+## v4.32.0
+
+- Release date: 2026-02-19
+- Tag: [v4.32.0](https://github.com/go-acme/lego/releases/tag/v4.32.0)
+
+### Added
+
+- **[dnsprovider]** Add DNS provider for ArtFiles
+- **[dnsprovider]** Add DNS provider for Leaseweb
+- **[dnsprovider]** Add DNS provider for FusionLayer NameSurfer
+- **[dnsprovider]** Add DNS provider for DDNSS
+- **[dnsprovider]** Add DNS provider for Bluecat v2
+- **[dnsprovider]** Add DNS provider for TodayNIC/时代互联
+- **[dnsprovider]** Add DNS provider for DNSExit
+- **[dnsprovider]** alidns: add line record option
+
+### Changed
+
+- **[dnsprovider]** azure: reinforces deprecation
+- **[dnsprovider]** allinkl: detect zone through API
+
+### Fixed
+
+- **[ari]** fix: implement parsing for Retry-After header according to RFC 7231
+- **[dnsprovider]** namesurfer: fix updateDNSHost
+- **[dnsprovider]** timewebcloud: fix subdomain support
+- **[dnsprovider]** fix: deduplicate authz for DNS01 challenge
+- **[lib,cli]** fix: use IPs to define the main domain
+- **[lib]** fix: preserve domain order
+
+## v4.31.0
+
+- Release date: 2026-01-08
+- Tag: [v4.31.0](https://github.com/go-acme/lego/releases/tag/v4.31.0)
+
+### Added
+
+- **[dnsprovider]** Add DNS provider for ISPConfig
+- **[dnsprovider]** Add DNS Provider for ISPConfig (DDNS Module)
+- **[dnsprovider]** Add DNS provider for Alwaysdata
+- **[dnsprovider]** Add DNS provider for JDCloud
+- **[dnsprovider]** Add DNS provider for 35.com/三五互联
+- **[dnsprovider]** f5xc: add an option to configure the domain of the server
+
+### Changed
+
+- **[lib]** feat: improve ACME error types
+- **[dnsprovider,cname]** namedotcom: follow CNAME
+
+### Fixed
+
+- **[dnsprovider]** hetzner: fix compatibility with _FILE suffix
+- **[dnsprovider]** gandiv5: fix API Key header
+
 ## v4.30.1
 
 - Release date: 2025-12-16
