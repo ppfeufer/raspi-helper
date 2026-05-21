@@ -16,3 +16,5 @@
 
 #docker system prune -a --volumes -f
 docker system prune --volumes -f
+
+docker image prune -af
