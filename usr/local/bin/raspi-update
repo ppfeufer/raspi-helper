@@ -73,15 +73,15 @@ if [ ${restart_raspi} == True ]
                 exit 1
         fi
     else
-        # Update the docker images
-        /usr/local/bin/docker-update
-
         # Restart nginx if it is installed
         if command -v nginx > /dev/null 2>&1
             then
                 printf "Restarting nginx …\n"
                 sudo systemctl restart nginx
         fi
+
+        # Update the docker images
+        /usr/local/bin/docker-update
 
         printf "Not Rebooting automatically. Please reboot manually if needed.\n"
 fi
